@@ -138,11 +138,12 @@ const MedicalView: React.FC = () => {
       const base64Data = (reader.result as string);
       setUploadedImagePreview(base64Data);
       
+      const mimeType = base64Data.substring(base64Data.indexOf(":") + 1, base64Data.indexOf(";"));
       const base64Clean = base64Data.split(',')[1];
       setAnalyzingImage(true);
       setScanResult(null);
       
-      const result = await analyzeMedicalResult(base64Clean, selectedLanguage);
+      const result = await analyzeMedicalResult(base64Clean, mimeType, selectedLanguage);
       setScanResult(result);
       setAnalyzingImage(false);
     };
@@ -190,7 +191,7 @@ const MedicalView: React.FC = () => {
        margin:       0.5,
        filename:     'MedSage_Clinical_Report.pdf',
        image:        { type: 'jpeg', quality: 0.98 },
-       html2canvas:  { scale: 2 },
+       html2canvas:  { scale: 2, useCORS: true },
        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
      };
      html2pdf().set(opt).from(reportRef.current).save();
@@ -331,11 +332,22 @@ const MedicalView: React.FC = () => {
                       </button>
                    </div>
                 </div>
+                
+                {/* The actual PDF content container */}
                 <div className="flex-1 overflow-y-auto p-8 bg-white text-slate-900" ref={reportRef}>
                    <div className="prose max-w-none">
                       <ReactMarkdown>{reportData}</ReactMarkdown>
                    </div>
-                   <div className="mt-12 pt-8 border-t border-slate-200 text-sm text-slate-500 text-center">
+                   
+                   {/* Inject the uploaded image into the report */}
+                   {uploadedImagePreview && (
+                      <div className="mt-8 pt-6 border-t border-slate-200" style={{ pageBreakInside: 'avoid' }}>
+                         <h3 className="text-xl font-bold text-slate-800 mb-4">Reference Medical Scan</h3>
+                         <img src={uploadedImagePreview} alt="Patient Uploaded Scan" className="max-w-full h-auto max-h-[500px] object-contain rounded-lg border border-slate-300 shadow-sm" />
+                      </div>
+                   )}
+
+                   <div className="mt-12 pt-8 border-t border-slate-200 text-sm text-slate-500 text-center" style={{ pageBreakInside: 'avoid' }}>
                       <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-12 h-12 rounded-full mx-auto mb-2" />
                       <p>MedSage AI - Your True Indian Health Companion</p>
                       <p>Report generated on {new Date().toLocaleDateString()}</p>

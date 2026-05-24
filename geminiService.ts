@@ -156,7 +156,7 @@ export const generateJournalEntry = async (chatHistory: string): Promise<string>
   }
 };
 
-// --- Medical Agent (Updated for Free Public Vercel Deployment) ---
+// --- Medical Agent ---
 export const consultMedicalAgent = async (profile: UserProfile, question: string, language: string = 'English'): Promise<string> => {
   try {
     const prompt = `
@@ -184,7 +184,7 @@ export const consultMedicalAgent = async (profile: UserProfile, question: string
   }
 };
 
-export const analyzeMedicalResult = async (base64Image: string, language: string = 'English'): Promise<{summary: string, anomalies: string[]}> => {
+export const analyzeMedicalResult = async (base64Image: string, mimeType: string, language: string = 'English'): Promise<{summary: string, anomalies: string[]}> => {
   try {
     const prompt = `
       Analyze this medical document/scan. 
@@ -201,12 +201,12 @@ export const analyzeMedicalResult = async (base64Image: string, language: string
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: [
-        { inlineData: { mimeType: 'image/jpeg', data: base64Image } },
+        { inlineData: { mimeType: mimeType, data: base64Image } },
         { text: prompt }
       ],
     });
 
-    const raw_text = (response.text || "").replace(/```json/g, '').replace(/```/g, '').strip();
+    const raw_text = (response.text || "").replace(/```json/g, '').replace(/```/g, '').trim();
     const parsed = JSON.parse(raw_text);
     
     return {
@@ -225,13 +225,11 @@ export const analyzeMedicalResult = async (base64Image: string, language: string
 // --- The Coordinator (Agent Meeting) ---
 export const synthesizeDailyReport = async (state: AppState): Promise<string> => {
   try {
-    // Summarize recent history for context
     const recentHistory = state.history.slice(0, 3).map(h => 
         `- ${h.date}: ${h.mood || 'Neutral'} (${h.caloriesIn - h.caloriesBurned} net kcal)
         Details: ${h.details || 'No details'}`
       ).join('\n');
 
-      
     const today = new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     const prompt = `
@@ -347,7 +345,7 @@ export const generateClinicalReport = async (profile: UserProfile, chatHistory: 
     `;
 
     const response = await ai.models.generateContent({
-        model: 'gemini-3.1-pro-preview',
+        model: 'gemini-2.5-flash',
         contents: prompt
     });
     return response.text || "Failed to generate report.";
