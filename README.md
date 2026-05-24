@@ -2,6 +2,7 @@
   <img src="public/img/logo.jpeg" alt="MedSage Logo" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
   <h1>MedSage: The Personal Medical Intelligence System</h1>
   <p><strong>Bridging the gap between consumer lifestyle tracking and clinical-grade medical reasoning.</strong></p>
+  <h3>🌐 <a href="https://medsage-gamma.vercel.app">Live Demo: medsage-gamma.vercel.app</a></h3>
 
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -48,34 +49,55 @@ The heart of the system. It acts as the clinical "safety check" for the entire e
 
 ---
 
-### 🤝 Meet The Health Specialists
+### 📱 Application Walkthrough: Screen by Screen
 
-<table align="center">
-  <tr>
-    <td align="center" width="50%">
-      <h4>🥗 Dietitian</h4>
-      <p>AI meal planning & calorie tracking. Suggests nutrition paths optimized for your health profile.</p>
-      <img src="public/img/Dietitian.png" alt="Dietitian Agent" width="100%" style="border-radius: 8px;"/>
-    </td>
-    <td align="center" width="50%">
-      <h4>🏋️ Trainer</h4>
-      <p>Adaptive workout generation with strict safety checks based on the Medical Specialist's input.</p>
-      <img src="public/img/Trainer.png" alt="Trainer Agent" width="100%" style="border-radius: 8px;"/>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <h4>💤 Sleep Specialist</h4>
-      <p>Sleep cycle analysis and actionable optimization strategies for recovery and better rest.</p>
-      <img src="public/img/Sleep.png" alt="Sleep Agent" width="100%" style="border-radius: 8px;"/>
-    </td>
-    <td align="center" width="50%">
-      <h4>🫂 Counselor</h4>
-      <p>Provides empathetic mental health support, stress management, and daily emotional tracking.</p>
-      <img src="public/img/Counselor.png" alt="Counselor Agent" width="100%" style="border-radius: 8px;"/>
-    </td>
-  </tr>
-</table>
+#### 1. Secure Authentication
+MedSage provides a secure, seamless entry point ensuring that your sensitive health data is protected from the moment you log in. It supports Apple, Google, and Email sign-in options.
+<div align="center">
+  <img src="public/img/Login.png" alt="Login Screen" width="600" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 2. Wellness Mode Dashboard
+This is your calm space for long-term health context collection and personalized wellness tracking. From this unified dashboard, you can quickly access your Physical Activity, Nutrition Habits, Sleep Specialist, and Past Reports.
+<div align="center">
+  <img src="public/img/Overview.png" alt="Wellness Mode" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 3. AI Trainer (Physical Activity)
+Need a plan? The AI Trainer builds custom workouts based on how you feel right now. Log your exercises, track calories burned, and get a structured session designed specifically for your current energy levels and "vibe".
+<div align="center">
+  <img src="public/img/Trainer.png" alt="Trainer Agent" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 4. Dietitian (Nutrition Habits)
+Upload a photo of your meal, and the AI Dietitian will automatically identify the food and break down the calories, protein, carbs, and fats. It also provides tailored dietary advice specific to the meal.
+<div align="center">
+  <img src="public/img/Dietitian.png" alt="Dietitian Agent" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 5. Sleep Specialist
+Monitor your sleep quality by logging your bedtime, wake time, and a subjective rating. You can even keep a "Dream Journal" to help the AI analyze your circadian rhythm and suggest improvements to your rest.
+<div align="center">
+  <img src="public/img/Sleep.png" alt="Sleep Agent" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 6. Personal Health Profile
+A centralized place to maintain your static health data including Name, Age, Physical attributes, detailed Medical Conditions, and Genetic Risks/Family History. This data provides the foundational context for the Medical Agent.
+<div align="center">
+  <img src="public/img/Profile.png" alt="Profile Screen" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 7. Empathetic Counselor
+Engage in supportive, responsive conversations with the AI Counselor. It actively listens to your emotional state or physical challenges (like asthma flare-ups) and provides empathetic, practical advice, advising escalation to medical professionals when necessary.
+<div align="center">
+  <img src="public/img/Counselor.png" alt="Counselor Chat Screen" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
+
+#### 8. Clinical Copilot (Powered by MedGemma)
+The core clinical reasoning engine. In offline mode, you can upload medical documents (like X-ray scans), and the system will process them locally to auto-flag anomalies (e.g., fractures). The text-based MedGemma model then provides detailed, clinical-grade analysis and answers complex health queries in multiple languages.
+<div align="center">
+  <img src="public/img/Medical.png" alt="Clinical Copilot Screen" width="800" style="border-radius: 10px; border: 1px solid #eee; margin-top: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
 
 ---
 
@@ -155,11 +177,7 @@ By utilizing MedGemma instead of a standard general-purpose LLM, MedSage provide
    ```
 
 5. **Start Exploring**
-   Open your browser and navigate to `http://localhost:5173`. You will be greeted by the login portal:
-
-<div align="center">
-  <img src="public/img/Login.png" alt="Login Screen" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 10px;"/>
-</div>
+   Open your browser and navigate to `http://localhost:5173` to experience MedSage locally.
 
 ---
 
