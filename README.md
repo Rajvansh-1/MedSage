@@ -20,15 +20,21 @@
 
 ## 🌟 What is MedSage?
 
-**MedSage** is a production-grade personal health intelligence platform designed to act as your **on-device medical expert**. It leverages the power of Google's specialized **MedGemma** model and a Multi-Agent Architecture to provide holistic, privacy-preserving health guidance. 
+**MedSage** is your **personal, on-device health team**. Imagine having a medical specialist, a nutritionist, a fitness trainer, a sleep specialist, and a counselor all working together just for you, accessible right from your phone or computer.
 
-Unlike generalist AI models, MedSage possesses deep specialized knowledge of medical terminology, drug interactions, and clinical guidelines, ensuring all sensitive data processing happens safely and securely.
+Instead of generic advice from standard AI chatbots, MedSage uses **Google's specialized MedGemma model**. This means it actually understands complex medical terminology, can read your lab reports, and checks for dangerous drug interactions. Most importantly, it is designed to process your highly sensitive medical data securely, ensuring total privacy.
 
 ---
 
 ## 🧠 Core Innovation: The Multi-Agent Ecosystem
 
-The system follows an **Agentic Workflow** where specialized AI personas collaborate under a Lead Coordinator to achieve comprehensive health monitoring and personalized recommendations. Every piece of advice is debated, reviewed, and finalized in a "Daily Consensus Meeting".
+Rather than one AI trying to do everything, MedSage uses a team of specialized AI "Agents." They work together under a Lead Coordinator. 
+
+Think of it like a daily hospital board meeting: 
+1. Your **Trainer** suggests a new workout.
+2. Your **Dietitian** suggests a meal plan.
+3. The **Medical Specialist (MedGemma)** reviews both to ensure they are medically safe based on your personal health history.
+Only after this "Daily Consensus Meeting" is the final, safe advice presented to you.
 
 <div align="center">
   <img src="public/img/Meeting1.png" alt="Multi-Agent Meeting" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px;"/>
@@ -38,10 +44,10 @@ The system follows an **Agentic Workflow** where specialized AI personas collabo
 <br />
 
 ### 🩺 Medical Specialist (Powered by MedGemma)
-The heart of the system. It acts as the clinical "safety check" for the entire ecosystem.
-- **Clinical Q&A:** Answers user health concerns based on specific medical history and genetic risks.
-- **Document Analysis:** Parses complex medical tests (blood panels, radiology) to extract key findings for the longitudinal record.
-- **Cross-Agent Verification:** Reviews logs from the Dietitian and Trainer to identify potential contraindications (e.g., advising against high-intensity cardio if a heart condition is detected).
+The heart of the system. It acts as the clinical safety net for your entire health journey.
+- **Clinical Q&A:** Answers your health concerns by cross-referencing your specific medical history and genetic risks.
+- **Document Analysis:** Upload your complex medical test results (like blood panels or radiology reports) and the AI will extract the key findings into your ongoing medical record.
+- **Safety Checks:** It constantly monitors advice from the other agents. For example, if the Trainer suggests high-intensity cardio, the Medical Specialist will intervene if your history shows a heart condition.
 
 <div align="center">
   <img src="public/img/i8.png" alt="Medical Agent" width="800" style="border-radius: 10px; border: 1px solid #eee;"/>
