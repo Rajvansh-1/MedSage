@@ -85,28 +85,28 @@ const DietitianView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-6 pb-24 md:pb-6 grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
       {/* Input Section */}
-      <div className="space-y-6">
+      <div className="space-y-6 animate-slide-up">
         
         {/* Quick Stats Panel */}
-        <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-end gap-4">
+        <div className="glass-card p-4 rounded-xl shadow-lg-md border border-indian-brown/10 flex items-end gap-4">
             <div className="flex-1">
-                <label className="text-xs text-slate-500 flex items-center gap-1 mb-1"><Ruler size={12}/> Height (cm)</label>
+                <label className="text-xs text-indian-brown/70 flex items-center gap-1 mb-1"><Ruler size={12}/> Height (cm)</label>
                 <input 
                     type="number" 
                     value={localHeight}
                     onChange={(e) => setLocalHeight(e.target.value)}
                     placeholder="--"
-                    className="w-full bg-slate-50 border border-slate-200 rounded p-1.5 text-sm font-bold text-slate-800 focus:outline-teal-500"
+                    className="w-full bg-indian-cream/30 border border-indian-brown/20 rounded p-1.5 text-sm font-bold text-indian-brown focus:outline-teal-500"
                 />
             </div>
             <div className="flex-1">
-                <label className="text-xs text-slate-500 flex items-center gap-1 mb-1"><Weight size={12}/> Weight (kg)</label>
+                <label className="text-xs text-indian-brown/70 flex items-center gap-1 mb-1"><Weight size={12}/> Weight (kg)</label>
                 <input 
                     type="number" 
                     value={localWeight}
                     onChange={(e) => setLocalWeight(e.target.value)}
                     placeholder="--"
-                    className="w-full bg-slate-50 border border-slate-200 rounded p-1.5 text-sm font-bold text-slate-800 focus:outline-teal-500"
+                    className="w-full bg-indian-cream/30 border border-indian-brown/20 rounded p-1.5 text-sm font-bold text-indian-brown focus:outline-teal-500"
                 />
             </div>
             <button 
@@ -118,29 +118,29 @@ const DietitianView: React.FC = () => {
             </button>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <div className="glass-card p-6 rounded-2xl shadow-lg-md border border-indian-brown/10">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                <Utensils className="text-teal-600" />
+            <h2 className="text-2xl font-bold text-indian-brown flex items-center gap-2">
+                <Utensils className="text-indian-green" />
                 Dietitian
             </h2>
-            <div className="flex bg-slate-100 p-1 rounded-lg">
+            <div className="flex bg-indian-cream/50 p-1 rounded-lg">
                 <button 
                     onClick={() => setMode('image')}
-                    className={`p-1.5 rounded-md transition-all ${mode === 'image' ? 'bg-white shadow text-teal-600' : 'text-slate-400'}`}
+                    className={`p-1.5 rounded-md transition-all ${mode === 'image' ? 'glass-card shadow-lg text-indian-green' : 'text-indian-brown/60'}`}
                 >
                     <Camera size={18} />
                 </button>
                 <button 
                     onClick={() => setMode('text')}
-                    className={`p-1.5 rounded-md transition-all ${mode === 'text' ? 'bg-white shadow text-teal-600' : 'text-slate-400'}`}
+                    className={`p-1.5 rounded-md transition-all ${mode === 'text' ? 'glass-card shadow-lg text-indian-green' : 'text-indian-brown/60'}`}
                 >
                     <Type size={18} />
                 </button>
             </div>
           </div>
 
-          <p className="text-slate-500 mb-6 text-sm">
+          <p className="text-indian-brown/70 mb-6 text-sm">
               {mode === 'image' ? "Upload a meal photo to analyze nutrition." : "Describe your meal in detail."}
           </p>
           
@@ -148,13 +148,13 @@ const DietitianView: React.FC = () => {
               <div 
                 onClick={() => fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-xl h-56 flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                preview ? 'border-teal-500 bg-teal-50' : 'border-slate-300 hover:border-teal-400 hover:bg-slate-50'
+                preview ? 'border-indian-green bg-indian-cream/50' : 'border-slate-300 hover:border-teal-400 hover:bg-indian-cream/30'
                 }`}
             >
                 {preview ? (
                 <img src={preview} alt="Food" className="h-full w-full object-contain rounded-lg p-2" />
                 ) : (
-                <div className="text-center text-slate-400">
+                <div className="text-center text-indian-brown/60">
                     <Upload size={48} className="mx-auto mb-2" />
                     <p>Click to upload meal photo</p>
                 </div>
@@ -172,7 +172,7 @@ const DietitianView: React.FC = () => {
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 placeholder="e.g. A bowl of oatmeal with blueberries and honey, and a black coffee."
-                className="w-full h-56 border border-slate-200 rounded-xl p-4 resize-none focus:ring-2 focus:ring-teal-200 focus:border-teal-500 outline-none"
+                className="w-full h-56 border border-indian-brown/20 rounded-xl p-4 resize-none focus:ring-2 focus:ring-teal-200 focus:border-indian-green outline-none"
              />
           )}
           
@@ -181,7 +181,7 @@ const DietitianView: React.FC = () => {
             <button
               onClick={handleAnalyze}
               disabled={analyzing}
-              className="w-full mt-4 bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 disabled:bg-slate-300 flex justify-center items-center gap-2"
+              className="w-full mt-4 bg-indian-orange hover:bg-indian-brown text-white py-3 rounded-lg font-semibold hover:bg-teal-700 disabled:bg-slate-300 flex justify-center items-center gap-2"
             >
               {analyzing ? <Loader2 className="animate-spin" /> : <SparklesIcon />}
               {analyzing ? "Dietitian is thinking..." : "Analyze Meal"}
@@ -191,16 +191,16 @@ const DietitianView: React.FC = () => {
 
         {/* Results Card */}
         {analysisResult && (
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-teal-100 animate-in fade-in slide-in-from-bottom-4">
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Dietitian's Report</h3>
+          <div className="glass-card p-6 rounded-2xl shadow-lg-lg border border-indian-orange/20 animate-in fade-in slide-in-from-bottom-4">
+            <h3 className="text-lg font-bold text-indian-brown mb-4">Dietitian's Report</h3>
             <div className="space-y-3 mb-6">
-               <div className="flex justify-between border-b border-slate-100 pb-2">
-                 <span className="text-slate-500">Identified</span>
-                 <span className="font-medium text-slate-900">{analysisResult.name}</span>
+               <div className="flex justify-between border-b border-indian-brown/10 pb-2">
+                 <span className="text-indian-brown/70">Identified</span>
+                 <span className="font-medium text-indian-brown">{analysisResult.name}</span>
                </div>
-               <div className="flex justify-between border-b border-slate-100 pb-2">
-                 <span className="text-slate-500">Calories</span>
-                 <span className="font-bold text-slate-900">{analysisResult.calories} kcal</span>
+               <div className="flex justify-between border-b border-indian-brown/10 pb-2">
+                 <span className="text-indian-brown/70">Calories</span>
+                 <span className="font-bold text-indian-brown">{analysisResult.calories} kcal</span>
                </div>
                <div className="grid grid-cols-3 gap-2 text-center text-sm pt-2">
                  <div className="bg-blue-50 p-2 rounded text-blue-700">
@@ -217,7 +217,7 @@ const DietitianView: React.FC = () => {
                  </div>
                </div>
                {analysisResult.notes && (
-                 <p className="text-sm text-slate-500 italic mt-2 bg-slate-50 p-3 rounded">
+                 <p className="text-sm text-indian-brown/70 italic mt-2 bg-indian-cream/30 p-3 rounded">
                    "{analysisResult.notes}"
                  </p>
                )}
@@ -225,13 +225,13 @@ const DietitianView: React.FC = () => {
             <div className="flex gap-3">
               <button 
                 onClick={handleSave}
-                className="flex-1 bg-teal-600 text-white py-2 rounded-lg font-medium hover:bg-teal-700"
+                className="flex-1 bg-indian-orange hover:bg-indian-brown text-white py-2 rounded-lg font-medium hover:bg-teal-700"
               >
                 Log Meal
               </button>
               <button 
                 onClick={() => { setPreview(null); setAnalysisResult(null); setTextInput(''); }}
-                className="px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-lg"
+                className="px-4 py-2 text-indian-brown/70 hover:bg-indian-cream/50 rounded-lg"
               >
                 Discard
               </button>
@@ -241,29 +241,29 @@ const DietitianView: React.FC = () => {
       </div>
 
       {/* History Feed */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full overflow-hidden">
-        <div className="p-4 border-b border-slate-100 bg-slate-50">
-          <h3 className="font-semibold text-slate-700">Today's Logs</h3>
+      <div className="glass-card rounded-2xl shadow-lg-md border border-indian-brown/10 flex flex-col h-full overflow-hidden">
+        <div className="p-4 border-b border-indian-brown/10 bg-indian-cream/30">
+          <h3 className="font-semibold text-indian-brown/90">Today's Logs</h3>
         </div>
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {foodLog.length === 0 ? (
-            <div className="text-center text-slate-400 mt-10">
+            <div className="text-center text-indian-brown/60 mt-10">
               <p>No meals logged today.</p>
             </div>
           ) : (
             foodLog.map((food) => (
-              <div key={food.id} className="flex gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
+              <div key={food.id} className="flex gap-4 p-3 rounded-lg hover:bg-indian-cream/30 transition-colors border border-transparent hover:border-indian-brown/10">
                 {food.imageUrl ? (
                   <img src={food.imageUrl} alt={food.name} className="w-16 h-16 object-cover rounded-md" />
                 ) : (
-                  <div className="w-16 h-16 bg-slate-200 rounded-md flex items-center justify-center text-slate-400 shrink-0">
+                  <div className="w-16 h-16 bg-slate-200 rounded-md flex items-center justify-center text-indian-brown/60 shrink-0">
                     <UtensilsIcon />
                   </div>
                 )}
                 <div>
-                  <h4 className="font-medium text-slate-900">{food.name}</h4>
-                  <p className="text-sm text-slate-500">{food.calories} kcal • P: {food.protein}g</p>
-                  <p className="text-xs text-slate-400 mt-1">{new Date(food.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                  <h4 className="font-medium text-indian-brown">{food.name}</h4>
+                  <p className="text-sm text-indian-brown/70">{food.calories} kcal • P: {food.protein}g</p>
+                  <p className="text-xs text-indian-brown/60 mt-1">{new Date(food.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
                 </div>
               </div>
             ))

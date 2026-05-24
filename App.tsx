@@ -33,12 +33,12 @@ const NavigationItem: React.FC<{
     onClick={onClick}
     className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-all duration-200 ${
       active 
-        ? 'bg-teal-600 text-white shadow-md' 
-        : 'text-slate-600 hover:bg-slate-100 hover:text-teal-700'
+        ? 'bg-indian-orange text-white shadow-md font-semibold' 
+        : 'text-indian-brown hover:bg-white/50 hover:text-indian-orange font-medium'
     }`}
   >
     {icon}
-    <span className="font-medium">{label}</span>
+    <span>{label}</span>
   </button>
 );
 
@@ -63,29 +63,34 @@ const AppShell: React.FC = () => {
   if (!onboardingComplete) return <OnboardingView />;
 
   return (
-    <div className="flex h-screen w-full bg-slate-50 overflow-hidden flex-col md:flex-row">
+    <div className="flex h-screen w-full bg-indian-cream overflow-hidden flex-col md:flex-row">
       
       {/* Mobile Top Bar */}
-      <div className="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-40 shadow-sm">
-        <div className="flex items-center space-x-2 text-teal-600">
-           <Activity size={24} strokeWidth={2.5} />
-           <span className="font-bold text-lg">DailyHealth AI MedGemma</span>
+      <div className="md:hidden glass-panel border-b border-indian-brown/10 p-4 flex justify-between items-center sticky top-0 z-40">
+        <div className="flex items-center space-x-2 text-indian-green">
+           <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-8 h-8 rounded-full object-cover shadow-sm" />
+           <div className="flex flex-col">
+             <span className="font-bold text-lg leading-tight">MedSage</span>
+             <span className="text-[10px] text-indian-orange font-semibold">भारत का स्वास्थ्य सहायक</span>
+           </div>
         </div>
         <button onClick={() => setCurrentView('PROFILE')}>
-           <div className="w-9 h-9 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm border border-teal-200">
+           <div className="w-9 h-9 rounded-full bg-indian-cream flex items-center justify-center text-indian-green font-bold text-sm border border-indian-orange/30 shadow-sm">
               {profile.name[0]}
            </div>
         </button>
       </div>
 
       {/* Sidebar (Desktop) */}
-      <aside className="w-64 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
-        <div className="p-6 border-b border-slate-100">
-          <div className="flex items-center space-x-2 text-teal-600">
-            <Activity size={28} strokeWidth={2.5} />
-            <span className="text-xl font-bold tracking-tight">DailyHealth AI MedGemma</span>
+      <aside className="w-64 glass-panel border-r border-indian-brown/10 flex flex-col hidden md:flex">
+        <div className="p-6 border-b border-indian-brown/10">
+          <div className="flex items-center space-x-3 text-indian-green">
+            <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-10 h-10 rounded-full object-cover shadow-sm border border-white" />
+            <div className="flex flex-col">
+              <span className="text-xl font-bold tracking-tight leading-tight">MedSage</span>
+              <span className="text-xs text-indian-orange font-semibold">भारत का स्वास्थ्य सहायक</span>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 mt-1">Holistic AI Ecosystem</p>
         </div>
         
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -95,7 +100,7 @@ const AppShell: React.FC = () => {
             icon={<LayoutDashboard size={20} />} 
             label="Overview" 
           />
-          <div className="pt-4 pb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider px-3">Agents</div>
+          <div className="pt-4 pb-2 text-xs font-bold text-indian-brown/60 uppercase tracking-wider px-3">Agents</div>
           <NavigationItem 
             active={currentView === 'DIETITIAN'} 
             onClick={() => setCurrentView('DIETITIAN')} 
@@ -123,35 +128,35 @@ const AppShell: React.FC = () => {
            <NavigationItem 
             active={currentView === 'MEDICAL'} 
             onClick={() => setCurrentView('MEDICAL')} 
-            icon={<Stethoscope size={20} className={currentView === 'MEDICAL' ? "text-cyan-200" : "text-cyan-600"} />} 
+            icon={<Stethoscope size={20} className={currentView === 'MEDICAL' ? "text-white" : "text-indian-green"} />} 
             label="Triage Copilot" 
           />
         </nav>
 
-        <div className="p-4 border-t border-slate-100">
+        <div className="p-4 border-t border-indian-brown/10">
            <button 
              onClick={() => setCurrentView('PROFILE')}
-             className="flex items-center space-x-3 text-slate-600 hover:text-teal-700 w-full"
+             className="flex items-center space-x-3 text-indian-brown hover:text-indian-orange w-full p-2 rounded-lg hover:bg-white/50 transition-colors"
            >
-             <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold uppercase">
+             <div className="w-8 h-8 rounded-full bg-indian-cream border border-indian-orange/30 flex items-center justify-center text-indian-green font-bold uppercase shadow-sm">
                {profile.name[0]}
              </div>
              <div className="text-sm text-left">
-               <p className="font-medium text-slate-900">{profile.name}</p>
-               <p className="text-xs text-slate-400">View Profile</p>
+               <p className="font-semibold text-indian-green">{profile.name}</p>
+               <p className="text-xs text-indian-brown/70">View Profile</p>
              </div>
            </button>
         </div>
       </aside>
 
       {/* Mobile Nav (Bottom Fixed) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around p-3 z-50 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <button onClick={() => setCurrentView('DASHBOARD')} className={`p-2 rounded-full ${currentView === 'DASHBOARD' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><LayoutDashboard size={24} /></button>
-        <button onClick={() => setCurrentView('DIETITIAN')} className={`p-2 rounded-full ${currentView === 'DIETITIAN' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><Utensils size={24} /></button>
-        <button onClick={() => setCurrentView('PHYSICAL')} className={`p-2 rounded-full ${currentView === 'PHYSICAL' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><BicepsFlexed size={24} /></button>
-        <button onClick={() => setCurrentView('SLEEP')} className={`p-2 rounded-full ${currentView === 'SLEEP' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><Moon size={24} /></button>
-        <button onClick={() => setCurrentView('COUNSELOR')} className={`p-2 rounded-full ${currentView === 'COUNSELOR' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><MessageCircleHeart size={24} /></button>
-        <button onClick={() => setCurrentView('MEDICAL')} className={`p-2 rounded-full ${currentView === 'MEDICAL' ? 'text-teal-600 bg-teal-50' : 'text-slate-400'}`}><Stethoscope size={24} /></button>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-indian-brown/10 flex justify-around p-3 z-50 pb-safe shadow-[0_-4px_10px_-1px_rgba(146,64,14,0.1)]">
+        <button onClick={() => setCurrentView('DASHBOARD')} className={`p-2 rounded-full transition-colors ${currentView === 'DASHBOARD' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><LayoutDashboard size={24} /></button>
+        <button onClick={() => setCurrentView('DIETITIAN')} className={`p-2 rounded-full transition-colors ${currentView === 'DIETITIAN' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Utensils size={24} /></button>
+        <button onClick={() => setCurrentView('PHYSICAL')} className={`p-2 rounded-full transition-colors ${currentView === 'PHYSICAL' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><BicepsFlexed size={24} /></button>
+        <button onClick={() => setCurrentView('SLEEP')} className={`p-2 rounded-full transition-colors ${currentView === 'SLEEP' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Moon size={24} /></button>
+        <button onClick={() => setCurrentView('COUNSELOR')} className={`p-2 rounded-full transition-colors ${currentView === 'COUNSELOR' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><MessageCircleHeart size={24} /></button>
+        <button onClick={() => setCurrentView('MEDICAL')} className={`p-2 rounded-full transition-colors ${currentView === 'MEDICAL' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Stethoscope size={24} /></button>
       </div>
 
       {/* Main Content Area */}

@@ -101,7 +101,7 @@ const MedicalView: React.FC = () => {
                  <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                    Triage Copilot
                  </h1>
-                 <p className="text-slate-400 text-sm flex items-center gap-2">
+                 <p className="text-indian-brown/60 text-sm flex items-center gap-2">
                    <ShieldCheck size={14} className="text-emerald-400"/> Local Edge Network • Offline Mode
                  </p>
              </div>
@@ -110,7 +110,7 @@ const MedicalView: React.FC = () => {
 
         {/* Multilingual Selector */}
         <div className="flex items-center gap-3 bg-slate-900 border border-slate-800 p-2 rounded-xl">
-           <Globe size={18} className="text-slate-400 ml-2" />
+           <Globe size={18} className="text-indian-brown/60 ml-2" />
            <select 
              value={selectedLanguage}
              onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -146,21 +146,21 @@ const MedicalView: React.FC = () => {
                      {analyzingImage ? (
                         <>
                           <ScanLine size={48} className="text-cyan-400 mb-4 animate-pulse" />
-                          <p className="font-semibold text-lg drop-shadow-md">Running Local Model...</p>
+                          <p className="font-semibold text-lg drop-shadow-lg-md">Running Local Model...</p>
                         </>
                      ) : (
                         <>
-                          <UploadCloud size={48} className="text-slate-200 mb-4 drop-shadow-md" />
-                          <p className="font-semibold drop-shadow-md">Upload new scan</p>
+                          <UploadCloud size={48} className="text-slate-200 mb-4 drop-shadow-lg-md" />
+                          <p className="font-semibold drop-shadow-lg-md">Upload new scan</p>
                         </>
                      )}
                   </div>
                 </>
               ) : (
                 <>
-                  <UploadCloud size={40} className="text-slate-500 mb-3" />
+                  <UploadCloud size={40} className="text-indian-brown/70 mb-3" />
                   <p className="text-slate-300 font-medium mb-1">Upload X-Ray / MRI</p>
-                  <p className="text-slate-500 text-xs">Drag and drop or click to browse</p>
+                  <p className="text-indian-brown/70 text-xs">Drag and drop or click to browse</p>
                 </>
               )}
            </div>
@@ -178,7 +178,7 @@ const MedicalView: React.FC = () => {
                 {/* Auto Flagging Anomalies */}
                 {scanResult.anomalies && scanResult.anomalies.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs text-slate-500 uppercase font-semibold">Auto-Flagged Anomalies</h4>
+                    <h4 className="text-xs text-indian-brown/70 uppercase font-semibold">Auto-Flagged Anomalies</h4>
                     {scanResult.anomalies.map((anomaly, idx) => (
                        <div key={idx} className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg flex items-start gap-3 text-sm">
                           <AlertCircle size={16} className="mt-0.5 shrink-0" />
@@ -207,12 +207,12 @@ const MedicalView: React.FC = () => {
         <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden">
            
            {/* Chat History Area */}
-           <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-hide">
+           <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-hide animate-slide-up">
               {chatHistory.length === 0 ? (
                  <div className="h-full flex flex-col items-center justify-center text-center opacity-50">
-                    <Stethoscope size={48} className="text-slate-600 mb-4" />
-                    <h3 className="text-lg font-medium text-slate-400">Offline Clinical Reasoning</h3>
-                    <p className="text-sm text-slate-500 max-w-sm mt-2">
+                    <Stethoscope size={48} className="text-indian-brown/80 mb-4" />
+                    <h3 className="text-lg font-medium text-indian-brown/60">Offline Clinical Reasoning</h3>
+                    <p className="text-sm text-indian-brown/70 max-w-sm mt-2">
                       Ask questions about the patient's history, test results, or potential treatments. Data never leaves this device.
                     </p>
                  </div>
@@ -227,7 +227,7 @@ const MedicalView: React.FC = () => {
                          {msg.role === 'agent' && (
                             <div className="flex items-center gap-2 mb-2 pb-2 border-b border-slate-700/50">
                                <Stethoscope size={14} className="text-cyan-400" />
-                               <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">MedGemma 4B</span>
+                               <span className="text-xs font-bold text-indian-brown/60 uppercase tracking-wide">MedGemma 4B</span>
                             </div>
                          )}
                          <div className="prose prose-sm prose-invert max-w-none">
@@ -239,7 +239,7 @@ const MedicalView: React.FC = () => {
               )}
               {loading && (
                  <div className="flex justify-start">
-                    <div className="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-4 flex items-center gap-3 text-slate-400 text-sm">
+                    <div className="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-4 flex items-center gap-3 text-indian-brown/60 text-sm">
                        <Loader2 size={16} className="animate-spin text-cyan-500" /> Reasoning locally...
                     </div>
                  </div>
@@ -255,7 +255,7 @@ const MedicalView: React.FC = () => {
                     onChange={(e) => setQuestion(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleConsult()}
                     placeholder="Enter clinical queries here..."
-                    className="flex-1 bg-transparent border-none text-slate-200 px-4 py-3.5 focus:ring-0 outline-none placeholder:text-slate-600"
+                    className="flex-1 bg-transparent border-none text-slate-200 px-4 py-3.5 focus:ring-0 outline-none placeholder:text-indian-brown/80"
                  />
                  <button 
                     onClick={handleConsult}
@@ -266,7 +266,7 @@ const MedicalView: React.FC = () => {
                  </button>
               </div>
               <div className="mt-2 text-center">
-                 <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold">
+                 <p className="text-[10px] text-indian-brown/80 uppercase tracking-wider font-semibold">
                    Model: MedGemma-1.5-4B-IT • Mode: Private
                  </p>
               </div>

@@ -71,7 +71,7 @@ const CounselorView: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col max-w-4xl mx-auto p-0 md:p-6 pb-24 md:pb-6">
-      <div className="flex-1 bg-white md:rounded-2xl shadow-sm border-x md:border border-slate-100 overflow-hidden flex flex-col h-screen md:h-auto">
+      <div className="flex-1 glass-card md:rounded-2xl shadow-lg-md border-x md:border border-indian-brown/10 overflow-hidden flex flex-col h-screen md:h-auto">
         {/* Header */}
         <div className="bg-emerald-50 p-4 border-b border-emerald-100">
             <div className="flex items-center justify-between mb-3">
@@ -80,15 +80,15 @@ const CounselorView: React.FC = () => {
                         <MessageCircleHeart size={24} />
                     </div>
                     <div>
-                        <h2 className="font-bold text-slate-800">Counselor</h2>
-                        <p className="text-xs text-slate-500">Always here to listen.</p>
+                        <h2 className="font-bold text-indian-brown">Counselor</h2>
+                        <p className="text-xs text-indian-brown/70">Always here to listen.</p>
                     </div>
                 </div>
                 {chatHistory.length > 2 && (
                     <button 
                         onClick={handleGenerateJournal}
                         disabled={generatingJournal}
-                        className="text-emerald-700 bg-white border border-emerald-200 px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 hover:bg-emerald-50"
+                        className="text-emerald-700 glass-card border border-emerald-200 px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 hover:bg-emerald-50"
                     >
                         {generatingJournal ? <Loader2 size={14} className="animate-spin" /> : <BookOpen size={14} />}
                         Journal
@@ -105,12 +105,12 @@ const CounselorView: React.FC = () => {
                             onClick={() => setEmotion(emo.label)}
                             className={`flex flex-col items-center p-2 rounded-lg transition-all ${
                                 currentEmotion === emo.label 
-                                ? 'bg-white shadow-sm ring-2 ring-emerald-500' 
+                                ? 'glass-card shadow-lg-md ring-2 ring-emerald-500' 
                                 : 'hover:bg-emerald-100/50'
                             }`}
                         >
                             <emo.icon size={20} className={emo.color} />
-                            <span className="text-[10px] text-slate-600 mt-1">{emo.label}</span>
+                            <span className="text-[10px] text-indian-brown/80 mt-1">{emo.label}</span>
                         </button>
                     ))}
                 </div>
@@ -131,10 +131,10 @@ const CounselorView: React.FC = () => {
         {/* Chat Area */}
         <div 
           ref={scrollRef}
-          className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50"
+          className="flex-1 overflow-y-auto p-4 space-y-4 bg-indian-cream/30/50"
         >
           {chatHistory.length === 0 && (
-            <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-60">
+            <div className="h-full flex flex-col items-center justify-center text-indian-brown/60 opacity-60">
                <MessageCircleHeart size={48} className="mb-2" />
                <p>How are you feeling today?</p>
             </div>
@@ -149,18 +149,18 @@ const CounselorView: React.FC = () => {
                 className={`max-w-[85%] md:max-w-[70%] rounded-2xl p-3 md:p-4 text-sm md:text-base ${
                   msg.sender === 'user' 
                     ? 'bg-emerald-600 text-white rounded-tr-none' 
-                    : 'bg-white border border-slate-200 text-slate-700 rounded-tl-none shadow-sm'
+                    : 'glass-card border border-indian-brown/20 text-indian-brown/90 rounded-tl-none shadow-lg-md'
                 }`}
               >
                 {msg.sender === 'agent' ? (
-                   <div className="prose prose-sm max-w-none text-slate-700">
+                   <div className="prose prose-sm max-w-none text-indian-brown/90">
                        <ReactMarkdown>{msg.text}</ReactMarkdown>
                    </div>
                 ) : (
                    <p className="whitespace-pre-wrap">{msg.text}</p>
                 )}
                 
-                <p className={`text-[10px] mt-2 ${msg.sender === 'user' ? 'text-emerald-200' : 'text-slate-400'}`}>
+                <p className={`text-[10px] mt-2 ${msg.sender === 'user' ? 'text-emerald-200' : 'text-indian-brown/60'}`}>
                   {msg.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                 </p>
               </div>
@@ -169,7 +169,7 @@ const CounselorView: React.FC = () => {
 
           {isTyping && (
              <div className="flex justify-start">
-               <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 shadow-sm flex gap-1">
+               <div className="glass-card border border-indian-brown/20 rounded-2xl rounded-tl-none p-4 shadow-lg-md flex gap-1">
                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-75"></span>
                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-150"></span>
@@ -179,7 +179,7 @@ const CounselorView: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-white border-t border-slate-100">
+        <div className="p-4 glass-card border-t border-indian-brown/10">
           <div className="flex gap-2">
             <input 
               type="text"
@@ -187,12 +187,12 @@ const CounselorView: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder={currentEmotion ? `Tell me more about feeling ${currentEmotion.toLowerCase()}...` : "Type your message..."}
-              className="flex-1 border border-slate-200 rounded-full px-4 md:px-6 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm md:text-base"
+              className="flex-1 border border-indian-brown/20 rounded-full px-4 md:px-6 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm md:text-base"
             />
             <button 
               onClick={handleSend}
               disabled={!input.trim() || isTyping}
-              className="bg-emerald-600 text-white p-3 rounded-full hover:bg-emerald-700 disabled:opacity-50 transition-colors shadow-lg shadow-emerald-200"
+              className="bg-emerald-600 text-white p-3 rounded-full hover:bg-emerald-700 disabled:opacity-50 transition-colors shadow-lg-lg shadow-lg-emerald-200"
             >
               <Send size={20} />
             </button>

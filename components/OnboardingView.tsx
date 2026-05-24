@@ -31,25 +31,25 @@ const OnboardingView: React.FC = () => {
   const finish = () => completeOnboarding(data);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-       <div className="w-full max-w-lg bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-100">
+    <div className="min-h-screen bg-indian-cream/30 flex flex-col items-center justify-center p-4">
+       <div className="w-full max-w-lg glass-card p-6 md:p-8 rounded-3xl shadow-lg-lg border border-indian-brown/10">
           <div className="mb-6 flex justify-between items-center">
-             <span className="text-teal-600 font-bold uppercase tracking-widest text-xs">Step {step} of 3</span>
+             <span className="text-indian-green font-bold uppercase tracking-widest text-xs">Step {step} of 2</span>
              <div className="flex gap-1">
-                {[1, 2, 3].map(i => (
-                    <div key={i} className={`h-1 w-8 rounded-full ${step >= i ? 'bg-teal-500' : 'bg-slate-200'}`} />
+                {[1, 2].map(i => (
+                    <div key={i} className={`h-1 w-8 rounded-full ${step >= i ? 'bg-indian-cream/500' : 'bg-slate-200'}`} />
                 ))}
              </div>
           </div>
 
           {step === 1 && (
-             <div className="space-y-6 animate-in fade-in slide-in-from-right-8">
-                <h2 className="text-2xl font-bold text-slate-900">Let's get to know you.</h2>
+             <div className="space-y-6 animate-in fade-in slide-in-from-right-8 animate-slide-up">
+                <h2 className="text-2xl font-bold text-indian-brown">Let's get to know you.</h2>
                 <div>
-                   <label className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                   <label className="block text-sm font-medium text-indian-brown/90 mb-1">First Name</label>
                    <input 
                      type="text" 
-                     className="w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 outline-none"
+                     className="w-full border border-indian-brown/20 rounded-xl p-3 focus:ring-2 focus:ring-indian-orange outline-none"
                      placeholder="Your name"
                      value={data.name}
                      onChange={e => setData({...data, name: e.target.value})}
@@ -57,18 +57,18 @@ const OnboardingView: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Age</label>
+                    <label className="block text-sm font-medium text-indian-brown/90 mb-1">Age</label>
                     <input 
                       type="number" 
-                      className="w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 outline-none"
+                      className="w-full border border-indian-brown/20 rounded-xl p-3 focus:ring-2 focus:ring-indian-orange outline-none"
                       value={data.age}
                       onChange={e => setData({...data, age: parseInt(e.target.value)})}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                    <label className="block text-sm font-medium text-indian-brown/90 mb-1">Gender</label>
                     <select
-                      className="w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 outline-none bg-white"
+                      className="w-full border border-indian-brown/20 rounded-xl p-3 focus:ring-2 focus:ring-indian-orange outline-none glass-card"
                       value={data.gender}
                       onChange={e => setData({...data, gender: e.target.value as any})}
                     >
@@ -80,13 +80,13 @@ const OnboardingView: React.FC = () => {
                     </select>
                   </div>
                 </div>
-                <button onClick={nextStep} disabled={!data.name || !data.gender} className="w-full bg-teal-600 text-white py-3 rounded-xl font-bold mt-4 disabled:opacity-50">Continue</button>
+                <button onClick={nextStep} disabled={!data.name || !data.gender} className="w-full bg-indian-orange hover:bg-indian-brown text-white py-3 rounded-xl font-bold mt-4 disabled:opacity-50">Continue</button>
              </div>
           )}
 
           {step === 2 && (
-             <div className="space-y-6 animate-in fade-in slide-in-from-right-8">
-                <h2 className="text-2xl font-bold text-slate-900">What are your goals?</h2>
+             <div className="space-y-6 animate-in fade-in slide-in-from-right-8 animate-slide-up">
+                <h2 className="text-2xl font-bold text-indian-brown">What are your goals?</h2>
                 <div className="space-y-2">
                     {availableGoals.map(g => (
                         <button 
@@ -94,8 +94,8 @@ const OnboardingView: React.FC = () => {
                           onClick={() => toggleGoal(g)}
                           className={`w-full p-3 rounded-xl text-left flex justify-between items-center border transition-all ${
                              data.goals.includes(g) 
-                                ? 'border-teal-500 bg-teal-50 text-teal-800' 
-                                : 'border-slate-200 hover:border-teal-300'
+                                ? 'border-indian-green bg-indian-cream/50 text-indian-brown font-bold' 
+                                : 'border-indian-brown/20 hover:border-teal-300'
                           }`}
                         >
                             {g}
@@ -103,38 +103,7 @@ const OnboardingView: React.FC = () => {
                         </button>
                     ))}
                 </div>
-                <button onClick={nextStep} className="w-full bg-teal-600 text-white py-3 rounded-xl font-bold mt-4">Continue</button>
-             </div>
-          )}
-
-          {step === 3 && (
-             <div className="space-y-6 animate-in fade-in slide-in-from-right-8">
-                <h2 className="text-2xl font-bold text-slate-900">Medical Background</h2>
-                <p className="text-slate-500 text-sm">To give safe advice, the agents need to know your history.</p>
-                
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Medical Conditions</label>
-                  <textarea 
-                    className="w-full h-24 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 outline-none resize-none"
-                    placeholder="e.g. Asthma, Diabetes, Allergies..."
-                    value={data.medicalHistory}
-                    onChange={e => setData({...data, medicalHistory: e.target.value})}
-                  />
-                </div>
-
-                <div>
-                   <label className="block text-sm font-medium text-slate-700 mb-1 flex items-center gap-2">
-                     <Dna size={16} /> Family History / Genetics
-                   </label>
-                   <textarea 
-                     className="w-full h-24 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 outline-none resize-none"
-                     placeholder="e.g. Family history of heart disease..."
-                     value={data.geneticRisks}
-                     onChange={e => setData({...data, geneticRisks: e.target.value})}
-                   />
-                </div>
-
-                <button onClick={finish} className="w-full bg-teal-600 text-white py-3 rounded-xl font-bold mt-4 flex items-center justify-center gap-2">
+                <button onClick={finish} className="w-full bg-indian-orange hover:bg-indian-brown text-white py-3 rounded-xl font-bold mt-4 flex items-center justify-center gap-2">
                     Get Started <ArrowRight size={18} />
                 </button>
              </div>

@@ -63,11 +63,11 @@ const DashboardView: React.FC = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 max-w-6xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-6">
+    <div className="p-4 md:p-6 max-w-6xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-6 animate-slide-up">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Health Overview</h1>
-          <p className="text-sm md:text-base text-slate-500">Welcome back, {profile.name}.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-indian-brown">Health Overview</h1>
+          <p className="text-sm md:text-base text-indian-brown/70">Welcome back, {profile.name}.</p>
         </div>
         
         <div className="flex flex-wrap w-full md:w-auto items-center gap-3">
@@ -89,14 +89,14 @@ const DashboardView: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Nutrition Card */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+        <div className="glass-card p-6 rounded-2xl shadow-lg-md border border-indian-brown/10">
+          <h3 className="text-lg font-semibold text-indian-brown mb-4 flex items-center gap-2">
               <Utensils size={20} className="text-blue-500" /> Nutrition
           </h3>
           <div className="flex justify-between items-end mb-6">
             <div>
-              <span className="text-4xl font-bold text-slate-900">{totalCalories}</span>
-              <span className="text-sm text-slate-500 ml-1">kcal</span>
+              <span className="text-4xl font-bold text-indian-brown">{totalCalories}</span>
+              <span className="text-sm text-indian-brown/70 ml-1">kcal</span>
             </div>
             <div className="text-right">
                <span className="text-sm text-emerald-600 font-medium">Net: {netCalories}</span>
@@ -118,46 +118,46 @@ const DashboardView: React.FC = () => {
         </div>
 
         {/* Activity Card */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+        <div className="glass-card p-6 rounded-2xl shadow-lg-md border border-indian-brown/10">
+          <h3 className="text-lg font-semibold text-indian-brown mb-4 flex items-center gap-2">
              <BicepsFlexed size={20} className="text-orange-500" /> Physical Activity
           </h3>
           <div className="space-y-4">
-             <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                <span className="text-slate-600">Burned</span>
+             <div className="flex items-center justify-between p-3 bg-indian-cream/30 rounded-lg">
+                <span className="text-indian-brown/80">Burned</span>
                 <span className="font-bold text-orange-600">{totalBurned} kcal</span>
              </div>
-             <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                <span className="text-slate-600">Workouts</span>
-                <span className="font-bold text-slate-900">{exerciseLog.length}</span>
+             <div className="flex items-center justify-between p-3 bg-indian-cream/30 rounded-lg">
+                <span className="text-indian-brown/80">Workouts</span>
+                <span className="font-bold text-indian-brown">{exerciseLog.length}</span>
              </div>
              {exerciseLog.slice(-2).map((ex) => (
                <div key={ex.id} className="text-sm border-l-2 border-orange-400 pl-3">
-                 <p className="font-medium text-slate-900">{ex.type}</p>
-                 <p className="text-slate-500">{ex.durationMinutes} min • {ex.intensity}</p>
+                 <p className="font-medium text-indian-brown">{ex.type}</p>
+                 <p className="text-indian-brown/70">{ex.durationMinutes} min • {ex.intensity}</p>
                </div>
              ))}
              {exerciseLog.length === 0 && (
-               <p className="text-sm text-slate-400 italic">No workouts logged yet.</p>
+               <p className="text-sm text-indian-brown/60 italic">No workouts logged yet.</p>
              )}
           </div>
         </div>
 
         {/* Sleep & Recovery */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+        <div className="glass-card p-6 rounded-2xl shadow-lg-md border border-indian-brown/10">
+          <h3 className="text-lg font-semibold text-indian-brown mb-4 flex items-center gap-2">
               <Moon size={20} className="text-indigo-500" /> Sleep & Recovery
           </h3>
           {sleepLog ? (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-slide-up">
               <div className="flex justify-between text-center">
                  <div>
                    <div className="text-3xl font-bold text-indigo-600">{sleepLog.durationHours}h</div>
-                   <div className="text-xs text-slate-500">{sleepLog.bedTime} - {sleepLog.wakeTime}</div>
+                   <div className="text-xs text-indian-brown/70">{sleepLog.bedTime} - {sleepLog.wakeTime}</div>
                  </div>
                  <div>
                    <div className="text-xl font-bold text-indigo-600 mt-2">{sleepLog.quality}</div>
-                   <div className="text-xs text-slate-500">Quality</div>
+                   <div className="text-xs text-indian-brown/70">Quality</div>
                  </div>
               </div>
               {sleepLog.dreamDescription && (
@@ -168,7 +168,7 @@ const DashboardView: React.FC = () => {
               )}
             </div>
           ) : (
-            <div className="h-full flex flex-col justify-center items-center text-slate-400 pb-8">
+            <div className="h-full flex flex-col justify-center items-center text-indian-brown/60 pb-8">
               <Moon size={32} className="mb-2 opacity-50" />
               <p>No sleep data.</p>
             </div>
@@ -178,9 +178,9 @@ const DashboardView: React.FC = () => {
       </div>
 
       {/* Ask the Health Team Section */}
-      <section className="bg-gradient-to-r from-teal-600 to-teal-800 rounded-2xl shadow-lg p-6 text-white">
+      <section className="bg-gradient-to-r from-teal-600 to-teal-800 rounded-2xl shadow-lg-lg p-6 text-white">
           <div className="flex items-center gap-3 mb-4">
-              <div className="bg-white/20 p-2 rounded-lg">
+              <div className="glass-card/20 p-2 rounded-lg">
                   <MessageSquare size={24} />
               </div>
               <div>
@@ -197,19 +197,19 @@ const DashboardView: React.FC = () => {
                       onChange={(e) => setTeamQuestion(e.target.value)}
                       placeholder="e.g. Should I exercise today given my bad sleep?"
                       onKeyDown={(e) => e.key === 'Enter' && handleAskTeam()}
-                      className="flex-1 rounded-xl px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      className="flex-1 rounded-xl px-4 py-3 text-indian-brown placeholder:text-indian-brown/60 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                   <button 
                       onClick={handleAskTeam}
                       disabled={askingTeam || !teamQuestion}
-                      className="bg-white text-teal-700 px-4 rounded-xl font-bold hover:bg-teal-50 disabled:opacity-50 transition-colors"
+                      className="glass-card text-indian-brown px-4 rounded-xl font-bold hover:bg-indian-cream/50 disabled:opacity-50 transition-colors"
                   >
                       {askingTeam ? <Brain className="animate-bounce" /> : <Send />}
                   </button>
               </div>
               
               {teamAnswer && (
-                  <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 animate-in fade-in slide-in-from-top-2">
+                  <div className="glass-card/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 animate-in fade-in slide-in-from-top-2">
                       <div className="prose prose-invert prose-sm max-w-none">
                         <ReactMarkdown>{teamAnswer}</ReactMarkdown>
                       </div>
@@ -219,7 +219,7 @@ const DashboardView: React.FC = () => {
       </section>
 
       {/* Consensus Card */}
-      <section className="bg-white rounded-2xl shadow-sm border border-indigo-100 overflow-hidden">
+      <section className="glass-card rounded-2xl shadow-lg-md border border-indigo-100 overflow-hidden">
         <div className="bg-gradient-to-r from-indigo-50 to-white p-4 md:p-6 border-b border-indigo-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center gap-3">
               <h2 className="text-lg md:text-xl font-bold text-indigo-900 flex items-center gap-2">
@@ -237,10 +237,10 @@ const DashboardView: React.FC = () => {
 
           <button 
             onClick={handleEndDay} 
-            className={`text-sm font-bold flex items-center gap-2 px-4 py-2 rounded-lg transition-colors shadow-sm ${
+            className={`text-sm font-bold flex items-center gap-2 px-4 py-2 rounded-lg transition-colors shadow-lg-md ${
                 dayEnded 
                 ? 'bg-emerald-100 text-emerald-700' 
-                : 'bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50'
+                : 'glass-card border border-indigo-200 text-indigo-700 hover:bg-indigo-50'
             }`}
           >
             {dayEnded ? (
@@ -256,11 +256,11 @@ const DashboardView: React.FC = () => {
         </div>
         <div className="p-4 md:p-6 min-h-[120px]">
           {dailyConsensus ? (
-             <div className="prose prose-indigo max-w-none text-sm md:text-base text-slate-700">
+             <div className="prose prose-indigo max-w-none text-sm md:text-base text-indian-brown/90">
                <ReactMarkdown>{dailyConsensus}</ReactMarkdown>
              </div>
           ) : (
-            <div className="text-center text-slate-400 py-8 flex flex-col items-center">
+            <div className="text-center text-indian-brown/60 py-8 flex flex-col items-center">
               <Sparkles size={32} className="mb-4 text-slate-200" />
               <p className="text-sm">Log your data, then click "Run Meeting" to generate summary.</p>
             </div>
@@ -270,30 +270,30 @@ const DashboardView: React.FC = () => {
 
       {/* History Section */}
       {history.length > 0 && (
-        <section className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
-             <div className="p-4 md:p-6 border-b border-slate-100 bg-slate-50">
-                 <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                     <Calendar size={20} className="text-slate-500"/> Previous Days
+        <section className="glass-card rounded-2xl shadow-lg-md border border-indian-brown/10 overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+             <div className="p-4 md:p-6 border-b border-indian-brown/10 bg-indian-cream/30">
+                 <h2 className="text-lg font-bold text-indian-brown flex items-center gap-2">
+                     <Calendar size={20} className="text-indian-brown/70"/> Previous Days
                  </h2>
              </div>
              <div className="divide-y divide-slate-100">
                  {history.slice(0, 3).map((entry, idx) => (
-                     <div key={idx} className="p-4 md:p-6 hover:bg-slate-50 transition-colors">
+                     <div key={idx} className="p-4 md:p-6 hover:bg-indian-cream/30 transition-colors">
                          <div className="flex justify-between items-center mb-2">
-                             <div className="font-bold text-slate-800">{entry.date}</div>
-                             <div className="flex gap-3 text-xs md:text-sm text-slate-500">
+                             <div className="font-bold text-indian-brown">{entry.date}</div>
+                             <div className="flex gap-3 text-xs md:text-sm text-indian-brown/70">
                                  <span>{entry.caloriesIn} kcal in</span>
                                  <span>{entry.caloriesBurned} kcal out</span>
                                  {entry.mood && <span>Mood: {entry.mood}</span>}
                              </div>
                          </div>
-                         <div className="prose prose-sm max-w-none text-slate-600 line-clamp-2 hover:line-clamp-none cursor-pointer">
+                         <div className="prose prose-sm max-w-none text-indian-brown/80 line-clamp-2 hover:line-clamp-none cursor-pointer">
                              <ReactMarkdown>{entry.consensus}</ReactMarkdown>
                          </div>
                      </div>
                  ))}
                  {history.length > 3 && (
-                     <div className="p-4 text-center bg-slate-50 text-slate-500 text-sm">
+                     <div className="p-4 text-center bg-indian-cream/30 text-indian-brown/70 text-sm">
                          View all {history.length} records in your Profile.
                      </div>
                  )}
