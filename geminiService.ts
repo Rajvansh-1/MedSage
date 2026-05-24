@@ -206,8 +206,13 @@ export const analyzeMedicalResult = async (base64Image: string, mimeType: string
       ],
     });
 
-    const raw_text = (response.text || "").replace(/```json/g, '').replace(/```/g, '').trim();
-    const parsed = JSON.parse(raw_text);
+    let parsed;
+    try {
+        const raw_text = (response.text || "").replace(/```json/g, '').replace(/```/g, '').trim();
+        parsed = JSON.parse(raw_text);
+    } catch (e) {
+        parsed = { summary: response.text || "Failed to parse model output." };
+    }
     
     return {
        summary: parsed.summary || "No response from Vision model.",
@@ -216,7 +221,7 @@ export const analyzeMedicalResult = async (base64Image: string, mimeType: string
   } catch (error) {
     console.error("Vision Analysis Error:", error);
     return {
-       summary: "The vision model is currently offline or the image could not be processed.",
+       summary: "Error processing image: " + (error instanceof Error ? error.message : String(error)),
        anomalies: ["Analysis Error"]
     };
   }
