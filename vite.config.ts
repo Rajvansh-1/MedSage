@@ -20,6 +20,23 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      esbuild: {
+        drop: mode === 'production' ? ['console', 'debugger'] : [],
+      },
+      build: {
+        outDir: 'dist',
+        sourcemap: false,
+        chunkSizeWarningLimit: 2000,
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              vendor: ['react', 'react-dom', 'lucide-react', 'recharts'],
+              gemini: ['@google/genai'],
+              supabase: ['@supabase/supabase-js'],
+            }
+          }
+        }
       }
     };
 });

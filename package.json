@@ -1,7 +1,10 @@
 {
-  "name": "dailyhealth-ai-medgemma",
+  "name": "medsage",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "MedSage AI - Your True Indian Health Companion",
+  "author": "Rajvansh",
+  "homepage": "https://medsage-gamma.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",
