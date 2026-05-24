@@ -22,6 +22,7 @@ import AuthView from './components/AuthView';
 import OnboardingView from './components/OnboardingView';
 import MedicalView from './components/MedicalView';
 import ProfileView from './components/ProfileView';
+import WellnessModeView from './components/WellnessModeView';
 
 const NavigationItem: React.FC<{
   active: boolean;
@@ -42,9 +43,10 @@ const NavigationItem: React.FC<{
   </button>
 );
 
-const MainContent: React.FC<{ view: ViewState }> = ({ view }) => {
+const MainContent: React.FC<{ view: ViewState; setCurrentView: (view: ViewState) => void }> = ({ view, setCurrentView }) => {
   switch (view) {
     case 'DASHBOARD': return <DashboardView />;
+    case 'WELLNESS': return <WellnessModeView onNavigate={setCurrentView} />;
     case 'DIETITIAN': return <DietitianView />;
     case 'PHYSICAL': return <PhysicalView />;
     case 'SLEEP': return <SleepView />;
@@ -100,36 +102,17 @@ const AppShell: React.FC = () => {
             icon={<LayoutDashboard size={20} />} 
             label="Overview" 
           />
-          <div className="pt-4 pb-2 text-xs font-bold text-indian-brown/60 uppercase tracking-wider px-3">Agents</div>
           <NavigationItem 
-            active={currentView === 'DIETITIAN'} 
-            onClick={() => setCurrentView('DIETITIAN')} 
-            icon={<Utensils size={20} />} 
-            label="Dietitian" 
-          />
-          <NavigationItem 
-            active={currentView === 'PHYSICAL'} 
-            onClick={() => setCurrentView('PHYSICAL')} 
-            icon={<BicepsFlexed size={20} />} 
-            label="Trainer" 
-          />
-          <NavigationItem 
-            active={currentView === 'SLEEP'} 
-            onClick={() => setCurrentView('SLEEP')} 
-            icon={<Moon size={20} />} 
-            label="Sleep Specialist" 
-          />
-          <NavigationItem 
-            active={currentView === 'COUNSELOR'} 
-            onClick={() => setCurrentView('COUNSELOR')} 
-            icon={<MessageCircleHeart size={20} />} 
-            label="Counselor" 
+            active={['WELLNESS', 'DIETITIAN', 'PHYSICAL', 'SLEEP', 'COUNSELOR'].includes(currentView)} 
+            onClick={() => setCurrentView('WELLNESS')} 
+            icon={<Activity size={20} />} 
+            label="Wellness Mode" 
           />
            <NavigationItem 
             active={currentView === 'MEDICAL'} 
             onClick={() => setCurrentView('MEDICAL')} 
             icon={<Stethoscope size={20} className={currentView === 'MEDICAL' ? "text-white" : "text-indian-green"} />} 
-            label="Triage Copilot" 
+            label="Clinical Copilot" 
           />
         </nav>
 
@@ -152,16 +135,13 @@ const AppShell: React.FC = () => {
       {/* Mobile Nav (Bottom Fixed) */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-indian-brown/10 flex justify-around p-3 z-50 pb-safe shadow-[0_-4px_10px_-1px_rgba(146,64,14,0.1)]">
         <button onClick={() => setCurrentView('DASHBOARD')} className={`p-2 rounded-full transition-colors ${currentView === 'DASHBOARD' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><LayoutDashboard size={24} /></button>
-        <button onClick={() => setCurrentView('DIETITIAN')} className={`p-2 rounded-full transition-colors ${currentView === 'DIETITIAN' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Utensils size={24} /></button>
-        <button onClick={() => setCurrentView('PHYSICAL')} className={`p-2 rounded-full transition-colors ${currentView === 'PHYSICAL' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><BicepsFlexed size={24} /></button>
-        <button onClick={() => setCurrentView('SLEEP')} className={`p-2 rounded-full transition-colors ${currentView === 'SLEEP' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Moon size={24} /></button>
-        <button onClick={() => setCurrentView('COUNSELOR')} className={`p-2 rounded-full transition-colors ${currentView === 'COUNSELOR' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><MessageCircleHeart size={24} /></button>
+        <button onClick={() => setCurrentView('WELLNESS')} className={`p-2 rounded-full transition-colors ${['WELLNESS', 'DIETITIAN', 'PHYSICAL', 'SLEEP', 'COUNSELOR'].includes(currentView) ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Activity size={24} /></button>
         <button onClick={() => setCurrentView('MEDICAL')} className={`p-2 rounded-full transition-colors ${currentView === 'MEDICAL' ? 'text-white bg-indian-orange shadow-md' : 'text-indian-brown/70 hover:text-indian-orange'}`}><Stethoscope size={24} /></button>
       </div>
 
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto w-full pb-20 md:pb-0">
-        <MainContent view={currentView} />
+        <MainContent view={currentView} setCurrentView={setCurrentView} />
       </main>
     </div>
   );

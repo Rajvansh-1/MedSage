@@ -1,6 +1,6 @@
-import React, { useState, useRef, DragEvent } from 'react';
+import React, { useState, useRef, DragEvent, useEffect } from 'react';
 import { useHealth } from '../store';
-import { consultMedicalAgent, analyzeMedicalResult } from '../geminiService';
+import { consultMedicalAgent, analyzeMedicalResult, generateClinicalReport } from '../geminiService';
 import { 
   Stethoscope, 
   UploadCloud, 
@@ -10,14 +10,28 @@ import {
   ScanLine, 
   Send,
   ShieldCheck,
-  Activity
+  Activity,
+  Mic,
+  MicOff,
+  FileText,
+  Download
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+// @ts-ignore
+import html2pdf from 'html2pdf.js';
 
 const LANGUAGES = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali'];
 
+// Web Speech API Types
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
 const MedicalView: React.FC = () => {
-  const { profile, updateProfile } = useHealth();
+  const { profile } = useHealth();
   
   // State
   const [question, setQuestion] = useState('');
@@ -25,6 +39,10 @@ const MedicalView: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   
+  // Voice State
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
   // Vision State
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [analyzingImage, setAnalyzingImage] = useState(false);
@@ -32,9 +50,77 @@ const MedicalView: React.FC = () => {
   const [scanResult, setScanResult] = useState<{summary: string, anomalies: string[]} | null>(null);
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
 
+  // Report State
+  const [generatingReport, setGeneratingReport] = useState(false);
+  const [reportData, setReportData] = useState<string | null>(null);
+  const reportRef = useRef<HTMLDivElement>(null);
+
+  // Initialize Speech Recognition
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+
+      recognitionRef.current.onresult = (event: any) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        
+        // Update input field in real time
+        setQuestion(prev => {
+           // We only append final results to avoid overwriting existing text completely
+           // But since continuous is true, we need to handle it carefully.
+           // A simpler approach for the hackathon: just set the value to the latest result.
+           return finalTranscript || interimTranscript; 
+        });
+      };
+
+      recognitionRef.current.onerror = (event: any) => {
+        console.error("Speech recognition error", event.error);
+        setIsListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      // Set language code based on dropdown
+      const langCode = selectedLanguage === 'Hindi' ? 'hi-IN' : 'en-IN';
+      if (recognitionRef.current) {
+         recognitionRef.current.lang = langCode;
+         recognitionRef.current.start();
+         setIsListening(true);
+      } else {
+         alert("Your browser does not support Speech Recognition.");
+      }
+    }
+  };
+
   const handleConsult = async () => {
     if (!question.trim()) return;
     
+    // Stop listening if sending message
+    if (isListening) {
+       recognitionRef.current?.stop();
+       setIsListening(false);
+    }
+
     const userMsg = question;
     setQuestion('');
     setChatHistory(prev => [...prev, { role: 'user', text: userMsg }]);
@@ -87,6 +173,29 @@ const MedicalView: React.FC = () => {
     }
   };
 
+  const handleGenerateReport = async () => {
+     if (chatHistory.length === 0 && !scanResult) {
+        alert("Please have a consultation or upload a scan first.");
+        return;
+     }
+     setGeneratingReport(true);
+     const reportText = await generateClinicalReport(profile, chatHistory, scanResult);
+     setReportData(reportText);
+     setGeneratingReport(false);
+  };
+
+  const downloadPDF = () => {
+     if (!reportRef.current) return;
+     const opt = {
+       margin:       0.5,
+       filename:     'MedSage_Clinical_Report.pdf',
+       image:        { type: 'jpeg', quality: 0.98 },
+       html2canvas:  { scale: 2 },
+       jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+     };
+     html2pdf().set(opt).from(reportRef.current).save();
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 pb-24 md:pb-6 h-full flex flex-col bg-slate-950 text-slate-200">
       
@@ -99,7 +208,7 @@ const MedicalView: React.FC = () => {
              </div>
              <div>
                  <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                   Triage Copilot
+                   Clinical Copilot
                  </h1>
                  <p className="text-indian-brown/60 text-sm flex items-center gap-2">
                    <ShieldCheck size={14} className="text-emerald-400"/> Local Edge Network • Offline Mode
@@ -204,8 +313,37 @@ const MedicalView: React.FC = () => {
         </div>
 
         {/* Right Column: Chat Reasoning */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden">
+        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden relative">
            
+           {/* Report Modal / Overlay */}
+           {reportData && (
+             <div className="absolute inset-0 bg-slate-900 z-30 flex flex-col animate-in fade-in zoom-in-95">
+                <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                   <h3 className="font-bold text-cyan-400 flex items-center gap-2">
+                      <FileText size={20} /> Generated Clinical Report
+                   </h3>
+                   <div className="flex gap-2">
+                      <button onClick={downloadPDF} className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                         <Download size={16} /> Download PDF
+                      </button>
+                      <button onClick={() => setReportData(null)} className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-semibold">
+                         Close
+                      </button>
+                   </div>
+                </div>
+                <div className="flex-1 overflow-y-auto p-8 bg-white text-slate-900" ref={reportRef}>
+                   <div className="prose max-w-none">
+                      <ReactMarkdown>{reportData}</ReactMarkdown>
+                   </div>
+                   <div className="mt-12 pt-8 border-t border-slate-200 text-sm text-slate-500 text-center">
+                      <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-12 h-12 rounded-full mx-auto mb-2" />
+                      <p>MedSage AI - Your True Indian Health Companion</p>
+                      <p>Report generated on {new Date().toLocaleDateString()}</p>
+                   </div>
+                </div>
+             </div>
+           )}
+
            {/* Chat History Area */}
            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-hide animate-slide-up">
               {chatHistory.length === 0 ? (
@@ -213,7 +351,7 @@ const MedicalView: React.FC = () => {
                     <Stethoscope size={48} className="text-indian-brown/80 mb-4" />
                     <h3 className="text-lg font-medium text-indian-brown/60">Offline Clinical Reasoning</h3>
                     <p className="text-sm text-indian-brown/70 max-w-sm mt-2">
-                      Ask questions about the patient's history, test results, or potential treatments. Data never leaves this device.
+                      Ask questions using text or voice. Generate a final PDF report when you're done.
                     </p>
                  </div>
               ) : (
@@ -246,29 +384,50 @@ const MedicalView: React.FC = () => {
               )}
            </div>
 
-           {/* Input Area */}
-           <div className="p-4 bg-slate-900 border-t border-slate-800">
-              <div className="relative flex items-center bg-slate-950 border border-slate-700 rounded-xl focus-within:border-cyan-500/50 focus-within:ring-1 focus-within:ring-cyan-500/50 transition-all">
+           {/* Controls Area */}
+           <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-col gap-3">
+              {/* Actions Row */}
+              {(chatHistory.length > 0 || scanResult) && (
+                 <div className="flex justify-center mb-1">
+                    <button 
+                       onClick={handleGenerateReport}
+                       disabled={generatingReport}
+                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-900/50 px-6 py-2.5 rounded-full text-sm font-bold shadow-lg transition-all disabled:opacity-50"
+                    >
+                       {generatingReport ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
+                       {generatingReport ? "Generating..." : "Get Results"}
+                    </button>
+                 </div>
+              )}
+
+              {/* Input Row */}
+              <div className="relative flex items-center bg-slate-950 border border-slate-700 rounded-xl focus-within:border-cyan-500/50 focus-within:ring-1 focus-within:ring-cyan-500/50 transition-all p-1">
+                 
+                 {/* Voice Button */}
+                 <button 
+                    onClick={toggleListening}
+                    className={`p-3 rounded-lg transition-colors flex-shrink-0 ${isListening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'text-slate-400 hover:bg-slate-800 hover:text-cyan-400'}`}
+                    title={isListening ? "Stop listening" : "Start voice input"}
+                 >
+                    {isListening ? <Mic size={20} /> : <MicOff size={20} />}
+                 </button>
+
                  <input 
                     type="text"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleConsult()}
-                    placeholder="Enter clinical queries here..."
-                    className="flex-1 bg-transparent border-none text-slate-200 px-4 py-3.5 focus:ring-0 outline-none placeholder:text-indian-brown/80"
+                    placeholder={isListening ? "Listening..." : "Enter clinical queries here..."}
+                    className="flex-1 bg-transparent border-none text-slate-200 px-3 py-3 focus:ring-0 outline-none placeholder:text-indian-brown/80"
                  />
+                 
                  <button 
                     onClick={handleConsult}
                     disabled={loading || !question.trim()}
-                    className="mr-2 p-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 disabled:opacity-50 disabled:hover:bg-cyan-600 transition-colors"
+                    className="mr-1 p-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 disabled:opacity-50 disabled:hover:bg-cyan-600 transition-colors flex-shrink-0"
                  >
                     <Send size={18} />
                  </button>
-              </div>
-              <div className="mt-2 text-center">
-                 <p className="text-[10px] text-indian-brown/80 uppercase tracking-wider font-semibold">
-                   Model: MedGemma-1.5-4B-IT • Mode: Private
-                 </p>
               </div>
            </div>
            

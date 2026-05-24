@@ -89,4 +89,4 @@ export interface AppState {
   isSynthesizing: boolean;
 }
 
-export type ViewState = 'AUTH' | 'ONBOARDING' | 'DASHBOARD' | 'DIETITIAN' | 'PHYSICAL' | 'SLEEP' | 'COUNSELOR' | 'MEDICAL' | 'PROFILE';
+export type ViewState = 'AUTH' | 'ONBOARDING' | 'DASHBOARD' | 'WELLNESS' | 'DIETITIAN' | 'PHYSICAL' | 'SLEEP' | 'COUNSELOR' | 'MEDICAL' | 'PROFILE';

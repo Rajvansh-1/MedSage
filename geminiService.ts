@@ -314,3 +314,45 @@ export const askCoordinator = async (state: AppState, question: string): Promise
       return "The team is currently offline.";
   }
 };
+
+export const generateClinicalReport = async (profile: UserProfile, chatHistory: any[], scanResult: any): Promise<string> => {
+  try {
+    const historyText = chatHistory.map(msg => `${msg.role.toUpperCase()}: ${msg.text}`).join('\n');
+    const scanContext = scanResult ? `Scan Summary: ${scanResult.summary}\nAnomalies: ${scanResult.anomalies.join(', ')}` : 'No recent scans uploaded.';
+
+    const prompt = `
+      You are the Lead Medical Specialist generating a final Clinical Copilot PDF Report.
+      
+      Patient Profile: ${profile.name}, ${profile.age}yo ${profile.gender}.
+      Medical History: ${profile.medicalHistory || 'None'}
+      Genetic Risks: ${profile.geneticRisks || 'None'}
+      
+      Clinical Conversation:
+      ${historyText || 'No conversation provided.'}
+      
+      Uploaded Medical Scans/Documents context:
+      ${scanContext}
+
+      Task:
+      Generate a professional, structured Clinical Report combining their wellness profile with the clinical conversation.
+      
+      Format using Markdown:
+      # MedSage Clinical Copilot Report
+      ## Patient Information
+      ## Clinical Summary
+      ## Key Insights from Consultation
+      ## Proposed Next Steps
+      
+      DISCLAIMER: This report is AI-generated and not professional medical advice.
+    `;
+
+    const response = await ai.models.generateContent({
+        model: 'gemini-3.1-pro-preview',
+        contents: prompt
+    });
+    return response.text || "Failed to generate report.";
+  } catch(e) {
+      console.error(e);
+      return "Error generating clinical report.";
+  }
+};
