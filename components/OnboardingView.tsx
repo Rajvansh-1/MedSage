@@ -33,6 +33,13 @@ const OnboardingView: React.FC = () => {
   return (
     <div className="min-h-screen bg-indian-cream/30 flex flex-col items-center justify-center p-4">
        <div className="w-full max-w-lg glass-card p-6 md:p-8 rounded-3xl shadow-lg-lg border border-indian-brown/10">
+          <div className="flex items-center gap-4 mb-8 pb-6 border-b border-indian-brown/10">
+             <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-16 h-16 rounded-full object-cover shadow-sm border-2 border-white" />
+             <div>
+               <h1 className="text-2xl font-bold text-indian-brown">MedSage</h1>
+               <p className="text-xs text-indian-orange font-bold">भारत का स्वास्थ्य सहायक</p>
+             </div>
+          </div>
           <div className="mb-6 flex justify-between items-center">
              <span className="text-indian-green font-bold uppercase tracking-widest text-xs">Step {step} of 2</span>
              <div className="flex gap-1">

@@ -65,9 +65,12 @@ const DashboardView: React.FC = () => {
   return (
     <div className="p-4 md:p-6 max-w-6xl mx-auto space-y-6 md:space-y-8 pb-24 md:pb-6 animate-slide-up">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-indian-brown">Health Overview</h1>
-          <p className="text-sm md:text-base text-indian-brown/70">Welcome back, {profile.name}.</p>
+        <div className="flex items-center gap-4">
+          <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-16 h-16 rounded-full object-cover shadow-sm border-2 border-white" />
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-indian-brown flex items-center gap-2">MedSage <span className="text-sm md:text-base text-indian-orange font-bold">भारत का स्वास्थ्य सहायक</span></h1>
+            <p className="text-sm md:text-base text-indian-brown/70">Welcome back to your health overview, {profile.name}.</p>
+          </div>
         </div>
         
         <div className="flex flex-wrap w-full md:w-auto items-center gap-3">

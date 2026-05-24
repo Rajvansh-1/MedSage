@@ -9,13 +9,11 @@ const AuthView: React.FC = () => {
     <div className="min-h-screen bg-indian-cream/30 flex flex-col items-center justify-center p-4">
       <div className="glass-card p-8 rounded-3xl shadow-lg-xl w-full max-w-md text-center border border-indian-brown/10">
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-indian-orange hover:bg-indian-brown rounded-2xl flex items-center justify-center text-white shadow-lg-lg shadow-lg-teal-200 transform rotate-3">
-             <Activity size={32} strokeWidth={3} />
-          </div>
+           <img src="/img/logo.jpeg" alt="MedSage Logo" className="w-24 h-24 rounded-full object-cover shadow-lg border-4 border-white" />
         </div>
         
-        <h1 className="text-3xl font-bold text-indian-brown mb-2">DailyHealth AI</h1>
-        <p className="text-indian-brown/70 mb-8">Your holistic health ecosystem.</p>
+        <h1 className="text-3xl font-bold text-indian-brown mb-1">MedSage</h1>
+        <p className="text-sm text-indian-orange font-bold mb-6 tracking-wide">भारत का स्वास्थ्य सहायक</p>
 
         <div className="space-y-4">
            <button 
